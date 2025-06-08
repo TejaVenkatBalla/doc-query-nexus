@@ -1,5 +1,6 @@
 
 import { useState, useRef, useEffect } from 'react';
+import { API_BASE_URL } from '@/config';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -55,7 +56,7 @@ export const ChatInterface = () => {
 
     try {
       const token = localStorage.getItem('access_token');
-      const response = await fetch('http://127.0.0.1:8000/api/bot', {
+      const response = await fetch(`${API_BASE_URL}/api/bot`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

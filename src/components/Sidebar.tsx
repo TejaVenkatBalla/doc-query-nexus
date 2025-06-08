@@ -12,6 +12,7 @@ import {
   User
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { API_BASE_URL } from '@/config';
 
 interface SidebarProps {
   currentView: 'chat' | 'files';
@@ -42,7 +43,7 @@ export const Sidebar = ({ currentView, onViewChange, onLogout, onCloseSidebar }:
     setIsLoading(true);
     try {
       const token = localStorage.getItem('access_token');
-      const response = await fetch('http://127.0.0.1:8000/api/bot', {
+      const response = await fetch(`${API_BASE_URL}/api/bot`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },

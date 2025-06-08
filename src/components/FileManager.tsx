@@ -16,6 +16,7 @@ import {
   RefreshCw
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { API_BASE_URL } from '@/config';
 
 interface DocumentFile {
   id: string;
@@ -42,7 +43,7 @@ export const FileManager = () => {
     setIsLoading(true);
     try {
       const token = localStorage.getItem('access_token');
-      const response = await fetch('http://127.0.0.1:8000/api/doc', {
+      const response = await fetch(`${API_BASE_URL}/api/doc`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -81,7 +82,7 @@ export const FileManager = () => {
         setUploadProgress(prev => Math.min(prev + 10, 90));
       }, 200);
 
-      const response = await fetch('http://127.0.0.1:8000/api/doc', {
+      const response = await fetch(`${API_BASE_URL}/api/doc`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
