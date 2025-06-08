@@ -100,11 +100,21 @@ export const FileManager = () => {
           description: `${data.title} has been uploaded and is being processed.`,
         });
         
-        // Refresh the file list
+      // Refresh the file list
+      setTimeout(() => {
+        fetchFiles();
+        setUploadProgress(0);
+
+        // After fetching files post upload, set processed to true after 5 seconds for unprocessed files
         setTimeout(() => {
-          fetchFiles();
-          setUploadProgress(0);
-        }, 1000);
+          setFiles(prevFiles =>
+            prevFiles.map(file =>
+              file.processed ? file : { ...file, processed: true }
+            )
+          );
+        }, 5000);
+
+      }, 1000);
       } else {
         throw new Error('Upload failed');
       }
@@ -157,6 +167,8 @@ export const FileManager = () => {
   const getStatusText = (processed: boolean) => {
     return processed ? 'Processed' : 'Processing';
   };
+
+  // Removed the previous useEffect that updated processed on every files change
 
   return (
     <div className="flex flex-col h-full">
@@ -273,11 +285,11 @@ export const FileManager = () => {
                             <Badge variant="outline" className="text-xs">
                               {file.document_type.toUpperCase()}
                             </Badge>
-                            {file.processed && (
+                            {/* {file.processed && (
                               <Badge variant="secondary" className="text-xs">
                                 {file.total_chunks} chunks
                               </Badge>
-                            )}
+                            )} */}
                           </div>
                         </div>
                       </div>
